@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Form Validation</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .container {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 350px;
+  }
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  .error {
+    color: red;
+    font-size: 14px;
+  }
+  button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  button:hover {
+    background: #0056b3;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h2>Registration Form</h2>
+    <form id="myForm">
+      <label>Name</label>
+      <input type="text" id="name" placeholder="Enter your name">
+      <div class="error" id="nameError"></div>
+
+      <label>Email</label>
+      <input type="email" id="email" placeholder="Enter your email">
+      <div class="error" id="emailError"></div>
+
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Enter password">
+      <div class="error" id="passwordError"></div>
+
+      <label>Confirm Password</label>
+      <input type="password" id="confirmPassword" placeholder="Confirm password">
+      <div class="error" id="confirmError"></div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+<script>
+document.getElementById("myForm").addEventListener("submit", function(event) {
+  event.preventDefault(); // stop form submission
+
+  let valid = true;
+
+  // Get input values
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  // Clear errors
+  document.getElementById("nameError").textContent = "";
+  document.getElementById("emailError").textContent = "";
+  document.getElementById("passwordError").textContent = "";
+  document.getElementById("confirmError").textContent = "";
+
+  // Validate Name
+  if (name.length < 3) {
+    document.getElementById("nameError").textContent = "Name must be at least 3 characters long.";
+    valid = false;
+  }
+
+  // Validate Email
+  const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+  if (!email.match(emailPattern)) {
+    document.getElementById("emailError").textContent = "Enter a valid email address.";
+    valid = false;
+  }
+
+  // Validate Password
+  if (password.length < 6) {
+    document.getElementById("passwordError").textContent = "Password must be at least 6 characters.";
+    valid = false;
+  }
+
+  // Confirm Password
+  if (password !== confirmPassword) {
+    document.getElementById("confirmError").textContent = "Passwords do not match.";
+    valid = false;
+  }
+
+  // If valid
+  if (valid) {
+    alert("Form submitted successfully!");
+    document.getElementById("myForm").reset();
+  }
+});
+</script>
+</body>
+</html>
